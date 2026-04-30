@@ -1,3 +1,23 @@
+-- Purpose: Provide an overview of customer master data including identification, classification, sales reps, payment terms, and contact details.
+-- Context: Used to review and validate customer master records in Sage X3, especially for reporting, credit, and sales analysis.
+-- Inputs:
+--   - (none explicit) -> Full customer set from BPCUSTOMER; can be filtered externally if needed.
+-- Outputs (examples):
+--   - customer_code        -> Customer code (BPCNUM_0).
+--   - customer_name        -> Customer name (BPCNAM_0).
+--   - tax_id               -> Tax ID / VAT number (EECNUM_0).
+--   - customer_category    -> Customer category code (BCGCOD_0).
+--   - customer_type_code   -> Customer type code (TSCCOD_0) + description.
+--   - business_area_code   -> Business area code (TSCCOD_1) + description.
+--   - sales_rep_1 / sales_rep_2 -> Assigned sales representatives.
+--   - payment_terms        -> Payment terms code + description.
+--   - country, city, address, postal_code, phone, email.
+--   - status               -> Active / Inactive.
+-- Notes:
+--   - Uses ATEXTRA/ATABDIV to translate codes (customer type, business area) into readable descriptions (in Portuguese).
+--   - Joins multiple Sage X3 tables: BPCUSTOMER, BPADDRESS, BPARTNER, TABPAYTERM, SALESREP.
+
+
 SELECT DISTINCT 
 
 BP.BPCNUM_0 as [Cod Cliente], BP.BPCNAM_0 as [Razão Social],P.EECNUM_0 AS [NIPC], BP.BCGCOD_0 as [Cod Categoria], TSCCOD_0 as [Cod Tipo Cliente],
